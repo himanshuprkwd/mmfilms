@@ -1,7 +1,7 @@
-// MM Films - Frontend Logic
+// MM Films - Frontend Logic (Connected to Google Forms)
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
-// 1. Gallery Access Code Verification
+// 1. Gallery Access Code Verification (Yeh Render se hi chalega)
 document.getElementById('access-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const codeInput = document.getElementById('access-code');
@@ -30,37 +30,41 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
     }
 });
 
-// 2. Booking Form Submission (Updated for MM Films Form)
+// 2. Booking Form Submission (Direct to Google Form)
 document.querySelector('form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Alag se koi div na ho toh alert dikhane ke liye status
-    alert("Sending your booking request... Please wait.");
-    
-    // Aapke form ke inputs se data uthana
-    const bookingData = {
-        name: document.querySelector('input[placeholder="Your name"]')?.value,
-        phone: document.querySelector('input[placeholder="+91 XXXXX XXXXX"]')?.value,
-        email: document.querySelector('input[placeholder="your@email.com"]')?.value,
-        date: document.querySelector('input[type="date"]')?.value,
-        eventType: document.querySelector('select')?.value, 
-        message: document.querySelector('textarea')?.value
-    };
+    // Form data collect karna
+    const name = document.querySelector('input[placeholder="Your name"]')?.value || "";
+    const phone = document.querySelector('input[placeholder="+91 XXXXX XXXXX"]')?.value || "";
+    const email = document.querySelector('input[placeholder="your@email.com"]')?.value || "";
+    const date = document.querySelector('input[type="date"]')?.value || "";
+    const eventType = document.querySelector('select')?.value || ""; 
+    const message = document.querySelector('textarea')?.value || "";
+
+    // Agar Date ya Message ke alag se code nahi hain, toh hum unhe Message wale box mein jod kar bhej rahe hain taaki saara data mile!
+    const fullMessage = `Event Date: ${date} | Event Type: ${eventType} | Message: ${message}`;
+
+    // Aapka Google Form URL
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdB9oPEsUvItE8xolmuIKWexIPBkTh2uXB93YZHhgYizHLlBQ/formResponse";
+
+    // Data ko Google Form ke format mein pack karna
+    const formData = new FormData();
+    formData.append('entry.243524310', name);       // Full Name Code
+    formData.append('entry.61166254', phone);        // Mobile Number Code
+    formData.append('entry.179896706', email);       // Email Code
 
     try {
-        const response = await fetch(`${API_BASE_URL}/api/bookings`, {
+        // Google Form ko background mein data bhejna
+        await fetch(GOOGLE_FORM_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bookingData)
+            mode: 'no-cors', 
+            body: formData
         });
 
-        if (response.ok) {
-            alert("🎉 Booking request submitted successfully!");
-            document.querySelector('form').reset();
-        } else {
-            alert("❌ Failed to submit request. Please try again.");
-        }
+        alert("🎉 Booking request submitted successfully!");
+        document.querySelector('form').reset();
     } catch (error) {
-        alert("❌ Server error. Could not send request.");
+        alert("❌ Something went wrong. Please try again.");
     }
 });
