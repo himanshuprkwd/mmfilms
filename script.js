@@ -20,8 +20,6 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
         if (response.ok) {
             messageDiv.innerText = `Access Granted! Welcome ${data.clientName}. Redirecting...`;
             messageDiv.style.color = "green";
-            // Yahan aap redirect kar sakte hain apni main client gallery par
-            // window.location.href = "/client-gallery.html"; 
         } else {
             messageDiv.innerText = data.message || "Invalid Code.";
             messageDiv.style.color = "red";
@@ -32,41 +30,37 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
     }
 });
 
-// 2. Booking Form Submission
-document.getElementById('booking-form')?.addEventListener('submit', async (e) => {
+// 2. Booking Form Submission (Updated for MM Films Form)
+document.querySelector('form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const messageDiv = document.getElementById('booking-message');
     
+    // Alag se koi div na ho toh alert dikhane ke liye status
+    alert("Sending your booking request... Please wait.");
+    
+    // Aapke form ke inputs se data uthana
     const bookingData = {
-        name: document.getElementById('booking-name')?.value,
-        email: document.getElementById('booking-email')?.value,
-        service: document.getElementById('booking-service')?.value,
-        date: document.getElementById('booking-date')?.value,
-        message: document.getElementById('booking-text')?.value
+        name: document.querySelector('input[placeholder="Your name"]')?.value,
+        phone: document.querySelector('input[placeholder="+91 XXXXX XXXXX"]')?.value,
+        email: document.querySelector('input[placeholder="your@email.com"]')?.value,
+        date: document.querySelector('input[type="date"]')?.value,
+        eventType: document.querySelector('select')?.value, 
+        message: document.querySelector('textarea')?.value
     };
 
     try {
-        messageDiv.innerText = "Sending request...";
-        messageDiv.style.color = "orange";
-
         const response = await fetch(`${API_BASE_URL}/api/bookings`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bookingData)
         });
 
-        const data = await response.json();
-
         if (response.ok) {
-            messageDiv.innerText = "Booking request submitted successfully!";
-            messageDiv.style.color = "green";
-            document.getElementById('booking-form').reset();
+            alert("🎉 Booking request submitted successfully!");
+            document.querySelector('form').reset();
         } else {
-            messageDiv.innerText = data.message || "Failed to submit request.";
-            messageDiv.style.color = "red";
+            alert("❌ Failed to submit request. Please try again.");
         }
     } catch (error) {
-        messageDiv.innerText = "Server error. Could not send request.";
-        messageDiv.style.color = "red";
+        alert("❌ Server error. Could not send request.");
     }
 });
