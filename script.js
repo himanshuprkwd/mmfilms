@@ -1,4 +1,4 @@
-// MM Films - Frontend Logic (Connected to Google Forms)
+// MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
 // 1. Gallery Access Code Verification
@@ -30,47 +30,44 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
     }
 });
 
-// 2. Booking Form Submission (Sahi Form Target Kiya Hai)
-// Hum us button ko dhoondh rahe hain jisme "SEND BOOKING REQUEST" likha hai
-document.querySelectorAll('form').forEach((form) => {
-    // Check karte hain ki kya is form ke andar booking wala button hai
-    const submitBtn = form.querySelector('button[type="submit"]');
-    if (submitBtn && submitBtn.innerText.toUpperCase().includes("BOOKING")) {
-        
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Data collect karna aapke inputs se
-            const name = form.querySelector('input[placeholder="Your name"]')?.value || "";
-            const phone = form.querySelector('input[placeholder="+91 XXXXX XXXXX"]')?.value || "";
-            const email = form.querySelector('input[placeholder="your@email.com"]')?.value || "";
-            const date = form.querySelector('input[type="date"]')?.value || "";
-            const eventType = form.querySelector('select')?.value || ""; 
-            const message = form.querySelector('textarea')?.value || "";
+// 2. Booking Form Submission (Sahi Se Google Form Se Connected)
+document.getElementById('google-booking-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    alert("Sending your booking request... Please wait.");
+    
+    // Saare extra fields ka data hum details ke sath extract kar rahe hain
+    const name = document.getElementById('bf-name')?.value || "";
+    const phone = document.getElementById('bf-phone')?.value || "";
+    const email = document.getElementById('bf-email')?.value || "";
+    const date = document.getElementById('bf-date')?.value || "";
+    const eventType = document.getElementById('bf-type')?.value || "";
+    const packageSelected = document.getElementById('bf-package')?.value || "None";
+    const location = document.getElementById('bf-location')?.value || "Not Specified";
+    const userMsg = document.getElementById('bf-message')?.value || "No message";
 
-            // Chunki baaki entries ke code nahi hain, hum Mobile Number wale column mein hi phone aur extra details jod kar bhej rahe hain taaki Google Sheet mein sab dikhe!
-            const combinedPhoneDetails = `${phone} | Date: ${date} | Event: ${eventType} | Msg: ${message}`;
+    // Baaki bache fields ka data Mobile Number wale section mein ek sath combine ho jayega taaki Google sheet mein sab mile!
+    const combinedDetails = `${phone} | Date: ${date} | Event: ${eventType} | Pkg: ${packageSelected} | Venue: ${location} | Msg: ${userMsg}`;
 
-            const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdB9oPEsUvItE8xolmuIKWexIPBkTh2uXB93YZHhgYizHLlBQ/formResponse";
+    // Aapka exact Google Form Response link
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdB9oPEsUvItE8xolmuIKWexIPBkTh2uXB93YZHhgYizHLlBQ/formResponse";
 
-            const formData = new FormData();
-            formData.append('entry.243524310', name);                // Full Name
-            formData.append('entry.61166254', combinedPhoneDetails);  // Phone + All Details combined
-            formData.append('entry.179896706', email);               // Email
+    const formData = new FormData();
+    formData.append('entry.243524310', name);             // Full Name
+    formData.append('entry.61166254', combinedDetails);   // Phone + Saari Extra Details Ek Sath
+    formData.append('entry.179896706', email);            // Email Address
 
-            try {
-                // Google Form ko background mein hit karna
-                await fetch(GOOGLE_FORM_URL, {
-                    method: 'POST',
-                    mode: 'no-cors', 
-                    body: formData
-                });
-
-                alert("🎉 Booking request submitted successfully!");
-                form.reset();
-            } catch (error) {
-                alert("❌ Something went wrong. Please try again.");
-            }
+    try {
+        // Google server ko fetch request bhej rahe hain
+        await fetch(GOOGLE_FORM_URL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            body: formData
         });
+
+        alert("🎉 Booking request submitted successfully!");
+        document.getElementById('google-booking-form').reset();
+    } catch (error) {
+        alert("❌ Something went wrong. Please try again.");
     }
 });
