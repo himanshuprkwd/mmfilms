@@ -6,7 +6,7 @@ const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 // Yahan apne passwords aur links set karein
 // Format: 'PASSWORD': 'LINK'
 const galleryLinks = {
-  'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
+  'ADI2026WED123': 'https://drive.google.com/drive/folders/124UOchQjmYwQ1RhCLR3ZnE-CUt7CeroO?usp=sharing',
   'HIM2026BIR809': 'https://drive.google.com/drive/folders/124UOchQjmYwQ1RhCLR3ZnE-CUt7CeroO?usp=sharing',
   'ADITYA2025GOLD': 'https://drive.google.com/drive/folders/YAHAN_APNA_TISRA_LINK_DAALEIN'
 };
