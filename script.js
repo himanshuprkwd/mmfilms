@@ -1,52 +1,28 @@
 // MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
-// 1. Gallery Access Code Verification
-document.getElementById('access-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const codeInput = document.getElementById('access-code');
-    const messageDiv = document.getElementById('access-message');
-    const code = codeInput.value.trim();
-
-    if (!code) return;
-
-    try {
-        messageDiv.innerText = "Verifying code...";
-        messageDiv.style.color = "orange";
-
-        const response = await fetch(`${API_BASE_URL}/api/gallery/access?code=${code}`);
-        const data = await response.json();
-
-        if (response.ok) {
-            messageDiv.innerText = `Access Granted! Welcome ${data.clientName}. Redirecting...`;
-            messageDiv.style.color = "green";
-        } else {
-            messageDiv.innerText = data.message || "Invalid Code.";
-            messageDiv.style.color = "red";
-        }
-    } catch (error) {
-        messageDiv.innerText = "Connection error. Please try again later.";
-        messageDiv.style.color = "red";
-    }
-});
 function checkAccess() {
+    // 1. Element ko get karo
     const codeInput = document.getElementById('accessCode');
     const res = document.getElementById('access-result');
     
+    // 2. Check karo ki input mila ya nahi
     if (!codeInput) {
-        console.error("Error: 'accessCode' ID wala input nahi mila!");
+        alert("Error: Input box nahi mila! ID check karo.");
         return;
     }
 
     const code = codeInput.value.trim().toUpperCase();
-    console.log("User ne code dala:", code); // Console mein check karein
+    
+    // 3. Test karo ki kya code sahi se read ho raha hai
+    console.log("Input value is:", code); 
 
-    if (['ADI2026WED123','MM2026EVT456','ADITYA2025GOLD'].includes(code)) {
-        console.log("Code match ho gaya! Redirecting...");
+    if (code === 'ADI2026WED123' || code === 'MM2026EVT456' || code === 'ADITYA2025GOLD') {
+        alert("Code Sahi Hai! Ab Redirect ho raha hai...");
         window.location.href = "https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing";
     } else {
-        console.log("Code galat hai.");
         res.innerHTML = "Invalid Code!";
+        alert("Code Galat hai, check karo.");
     }
 }
 // Enter key ke liye event listener
