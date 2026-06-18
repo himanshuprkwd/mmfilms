@@ -29,6 +29,20 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
         messageDiv.style.color = "red";
     }
 });
+/* ── GALLERY ACCESS ── */
+const validCodes=['ADI2026WED123','MM2026EVT456','ADITYA2025GOLD'];
+function checkAccess(){
+  const code=document.getElementById('accessCode').value.trim().toUpperCase();
+  const res=document.getElementById('access-result');
+  if(validCodes.includes(code)){
+    res.innerHTML='<div class="access-success"><i class="fas fa-check-circle"></i> Access Granted! Your gallery is ready. <a href="#portfolio" style="color:inherit;text-decoration:underline">View Photos →</a></div>';
+  } else if(!code){
+    res.innerHTML='<div class="access-error">Please enter your access code.</div>';
+  } else {
+    res.innerHTML='<div class="access-error"><i class="fas fa-times-circle"></i> Invalid access code. Please check with your photographer.</div>';
+  }
+}
+document.getElementById('accessCode').addEventListener('keydown',e=>{ if(e.key==='Enter') checkAccess(); });
 
 // 2. Booking Form Submission (Sahi Se Google Form Se Connected)
 document.getElementById('google-booking-form')?.addEventListener('submit', async (e) => {
