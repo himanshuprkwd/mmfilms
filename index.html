@@ -1135,19 +1135,15 @@ footer{
   <div class="reveal" style="text-align:center">
     <p class="section-label">Private Gallery</p>
     <h2 class="section-title">Access Your <em>Photos</em></h2>
-    <div class="divider" style="margin:20px auto 0"></div>
-  </div>
-  <div class="access-wrap reveal">
-    <i class="fas fa-lock-open access-icon"></i>
-    <h3>Enter Your Gallery Code</h3>
-    <p>Your photographer will share a unique access code once your shoot is edited and ready.</p>
-    <div class="access-input-wrap">
-      <input type="text" id="accessCode" placeholder="ADI2026WED123" maxlength="20"/>
-      <button onclick="checkAccess()"><i class="fas fa-arrow-right"></i></button>
+    <div class="divider" style="margin:20px auto 40px"></div>
+    
+    <div class="access-form">
+      <input type="text" id="accessCode" placeholder="Enter Access Code">
+      <button onclick="window.location.href = document.getElementById('accessCode').value.trim().toUpperCase() === 'ADI2026WED123' || document.getElementById('accessCode').value.trim().toUpperCase() === 'MM2026EVT456' || document.getElementById('accessCode').value.trim().toUpperCase() === 'ADITYA2025GOLD' ? 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing' : 'javascript:alert(\'Invalid Code!\')'">
+        Submit
+      </button>
     </div>
-    <p class="access-hint">Example code: ADI2026WED123</p>
-    <div id="access-result"></div>
-  </div>
+    </div>
 </section>
 
 <!-- TESTIMONIALS -->
