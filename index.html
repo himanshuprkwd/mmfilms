@@ -1140,9 +1140,9 @@ footer{
     
     <div class="access-form">
       <input type="text" id="accessCode" placeholder="Enter Access Code">
-      <button onclick="window.location.href = document.getElementById('accessCode').value.trim().toUpperCase() === 'ADI2026WED123' || document.getElementById('accessCode').value.trim().toUpperCase() === 'MM2026EVT456' || document.getElementById('accessCode').value.trim().toUpperCase() === 'ADITYA2025GOLD' ? 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing' : 'javascript:alert(\'Invalid Code!\')'">
-        Submit
-      </button>
+      <button id="accessSubmitBtn">Submit</button>
+<!-- यहाँ रिजल्ट दिखाने के लिए यह खाली div जोड़ें -->
+<div id="access-result"></div>
     </div>
     </div>
 </section>
