@@ -1,29 +1,24 @@
 // MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
+/* ── GALLERY ACCESS UPDATED ── */
+const validCodes = ['ADI2026WED123', 'MM2026EVT456', 'ADITYA2025GOLD'];
+
 function checkAccess() {
-    // 1. Element ko get karo
-    const codeInput = document.getElementById('accessCode');
-    const res = document.getElementById('access-result');
-    
-    // 2. Check karo ki input mila ya nahi
-    if (!codeInput) {
-        alert("Error: Input box nahi mila! ID check karo.");
-        return;
-    }
+  const code = document.getElementById('accessCode').value.trim().toUpperCase();
+  const res = document.getElementById('access-result');
 
-    const code = codeInput.value.trim().toUpperCase();
+  if (validCodes.includes(code)) {
+    res.innerHTML = '<div class="access-success">Access Granted! Redirecting...</div>';
     
-    // 3. Test karo ki kya code sahi se read ho raha hai
-    console.log("Input value is:", code); 
-
-    if (code === 'ADI2026WED123' || code === 'MM2026EVT456' || code === 'ADITYA2025GOLD') {
-        alert("Code Sahi Hai! Ab Redirect ho raha hai...");
-        window.location.href = "https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing";
-    } else {
-        res.innerHTML = "Invalid Code!";
-        alert("Code Galat hai, check karo.");
-    }
+    // Yahan hum redirection force kar rahe hain
+    window.location.href = "https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing";
+    
+  } else if (!code) {
+    res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
+  } else {
+    res.innerHTML = '<div class="access-error">Invalid access code.</div>';
+  }
 }
 // Enter key ke liye event listener
 document.getElementById('accessCode')?.addEventListener('keydown', e => { 
