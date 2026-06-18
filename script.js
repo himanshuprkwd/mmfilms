@@ -2,17 +2,25 @@
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
 /* ── GALLERY ACCESS UPDATED ── */
-const validCodes = ['ADI2026WED123', 'MM2026EVT456', 'ADITYA2025GOLD'];
+
+// Yahan apne passwords aur links set karein
+// Format: 'PASSWORD': 'LINK'
+const galleryLinks = {
+  'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
+  'MM2026EVT456': 'https://drive.google.com/drive/folders/YAHAN_APNA_DUSRA_LINK_DAALEIN',
+  'ADITYA2025GOLD': 'https://drive.google.com/drive/folders/YAHAN_APNA_TISRA_LINK_DAALEIN'
+};
 
 function checkAccess() {
   const code = document.getElementById('accessCode').value.trim().toUpperCase();
   const res = document.getElementById('access-result');
 
-  if (validCodes.includes(code)) {
+  // Check karein ki kya user ne jo code dala wo hamare object mein hai
+  if (galleryLinks[code]) {
     res.innerHTML = '<div class="access-success">Access Granted! Redirecting...</div>';
     
-    // Yahan hum redirection force kar rahe hain
-    window.location.href = "https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing";
+    // Sahi code milne par wahi link khulega jo uske liye set hai
+    window.location.href = galleryLinks[code];
     
   } else if (!code) {
     res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
@@ -20,6 +28,7 @@ function checkAccess() {
     res.innerHTML = '<div class="access-error">Invalid access code.</div>';
   }
 }
+
 // Enter key ke liye event listener
 document.getElementById('accessCode')?.addEventListener('keydown', e => { 
     if (e.key === 'Enter') checkAccess(); 
