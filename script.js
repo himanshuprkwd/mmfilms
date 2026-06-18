@@ -7,7 +7,7 @@ const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 // Format: 'PASSWORD': 'LINK'
 const galleryLinks = {
   'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
-  'MM2026EVT456': 'https://drive.google.com/drive/folders/YAHAN_APNA_DUSRA_LINK_DAALEIN',
+  'ADITYA': 'https://drive.google.com/drive/folders/124UOchQjmYwQ1RhCLR3ZnE-CUt7CeroO?usp=sharing',
   'ADITYA2025GOLD': 'https://drive.google.com/drive/folders/YAHAN_APNA_TISRA_LINK_DAALEIN'
 };
 
