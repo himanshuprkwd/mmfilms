@@ -29,20 +29,36 @@ document.getElementById('access-form')?.addEventListener('submit', async (e) => 
         messageDiv.style.color = "red";
     }
 });
-/* ── GALLERY ACCESS ── */
-const validCodes=['ADI2026WED123','MM2026EVT456','ADITYA2025GOLD'];
-function checkAccess(){
-  const code=document.getElementById('accessCode').value.trim().toUpperCase();
-  const res=document.getElementById('access-result');
-  if(validCodes.includes(code)){
-    res.innerHTML='<div class="access-success"><i class="fas fa-check-circle"></i> Access Granted! Your gallery is ready. <a href="#portfolio" style="color:inherit;text-decoration:underline">View Photos →</a></div>';
-  } else if(!code){
-    res.innerHTML='<div class="access-error">Please enter your access code.</div>';
-  } else {
-    res.innerHTML='<div class="access-error"><i class="fas fa-times-circle"></i> Invalid access code. Please check with your photographer.</div>';
-  }
+/* ── UPDATED GALLERY ACCESS ── */
+const validCodes = ['ADI2026WED123', 'MM2026EVT456', 'ADITYA2025GOLD'];
+const DRIVE_URL = "https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing";
+
+function checkAccess() {
+    const codeInput = document.getElementById('accessCode');
+    const res = document.getElementById('access-result');
+    const code = codeInput.value.trim().toUpperCase();
+
+    if (!code) {
+        res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
+        return;
+    }
+
+    if (validCodes.includes(code)) {
+        res.innerHTML = '<div class="access-success"><i class="fas fa-check-circle"></i> Access Granted! Redirecting to your photos...</div>';
+        
+        // 1.5 second baad automatic redirection
+        setTimeout(() => {
+            window.location.href = DRIVE_URL;
+        }, 1500);
+    } else {
+        res.innerHTML = '<div class="access-error"><i class="fas fa-times-circle"></i> Invalid access code. Please check with your photographer.</div>';
+    }
 }
-document.getElementById('accessCode').addEventListener('keydown',e=>{ if(e.key==='Enter') checkAccess(); });
+
+// Enter key ke liye event listener
+document.getElementById('accessCode')?.addEventListener('keydown', e => { 
+    if (e.key === 'Enter') checkAccess(); 
+});
 
 // 2. Booking Form Submission (Sahi Se Google Form Se Connected)
 document.getElementById('google-booking-form')?.addEventListener('submit', async (e) => {
