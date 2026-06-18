@@ -1,25 +1,23 @@
 // MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
-// यह आपका नया और सही कोड है
+// MM Films - Updated Gallery Access
 const galleryLinks = {
   'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
-  'MM2026EVT456': 'यहाँ_अपना_दूसरा_लिंक_डालें',
-  'ADITYA2025GOLD': 'यहाँ_अपना_तीसरा_लिंक_डालें'
+  'MM2026EVT456': 'यहाँ_दूसरा_लिंक_डालें',
+  'ADITYA2025GOLD': 'यहाँ_तीसरा_लिंक_डालें'
 };
 
 function checkAccess() {
   const code = document.getElementById('accessCode').value.trim().toUpperCase();
   const res = document.getElementById('access-result');
 
-  if (!code) {
-    res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
-    return;
-  }
-
   if (galleryLinks[code]) {
     res.innerHTML = '<div class="access-success">Access Granted! Opening...</div>';
-    window.open(galleryLinks[code], '_blank'); // यह 403 error नहीं आने देगा
+    // 403 error से बचने के लिए window.open का उपयोग
+    window.open(galleryLinks[code], '_blank');
+  } else if (!code) {
+    res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
   } else {
     res.innerHTML = '<div class="access-error">Invalid access code.</div>';
   }
