@@ -1,23 +1,25 @@
 // MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
-// यहाँ पासवर्ड और उनके सामने उनके असली Google Drive लिंक डालें
+// यह आपका नया और सही कोड है
 const galleryLinks = {
-  'ADI2026WED123': 'https://drive.google.com/drive/folders/124UOchQjmYwQ1RhCLR3ZnE-CUt7CeroO?usp=sharing',
-  'MM2026EVT456': 'https://drive.google.com/drive/folders/YOUR_SECOND_LINK_ID',
-  'ADITYA2025GOLD': 'https://drive.google.com/drive/folders/YOUR_THIRD_LINK_ID'
+  'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
+  'MM2026EVT456': 'यहाँ_अपना_दूसरा_लिंक_डालें',
+  'ADITYA2025GOLD': 'यहाँ_अपना_तीसरा_लिंक_डालें'
 };
 
-// इसके ठीक नीचे अपना फंक्शन रखें जो तुमने अभी लिखा है
 function checkAccess() {
   const code = document.getElementById('accessCode').value.trim().toUpperCase();
   const res = document.getElementById('access-result');
 
-  if (galleryLinks[code]) {
-    res.innerHTML = '<div class="access-success">Access Granted! Opening gallery...</div>';
-    window.open(galleryLinks[code], '_blank');
-  } else if (!code) {
+  if (!code) {
     res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
+    return;
+  }
+
+  if (galleryLinks[code]) {
+    res.innerHTML = '<div class="access-success">Access Granted! Opening...</div>';
+    window.open(galleryLinks[code], '_blank'); // यह 403 error नहीं आने देगा
   } else {
     res.innerHTML = '<div class="access-error">Invalid access code.</div>';
   }
