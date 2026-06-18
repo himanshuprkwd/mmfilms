@@ -1,33 +1,30 @@
 // MM Films - Frontend Logic
 const API_BASE_URL = "https://mmfilms-backend.onrender.com";
 
-// MM Films - Updated Gallery Access
-const galleryLinks = {
-  'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
-  'MM2026EVT456': 'यहाँ_दूसरा_लिंक_डालें',
-  'ADITYA2025GOLD': 'यहाँ_तीसरा_लिंक_डालें'
+// Password aur Link ka mapping
+const linkMap = {
+    'ADI2026WED123': 'https://drive.google.com/drive/folders/1bIywrE6SS-I8JP-s1Weti0jLkJO1FH63?usp=sharing',
+    'MM2026EVT456': 'https://yahan_dusra_link_dalein.com',
+    'ADITYA2025GOLD': 'https://yahan_teesra_link_dalein.com'
 };
 
+// Main function (naam checkAccess rakha hai kyunki aapka event listener isi naam ka hai)
 function checkAccess() {
-  const code = document.getElementById('accessCode').value.trim().toUpperCase();
-  const res = document.getElementById('access-result');
-
-  if (galleryLinks[code]) {
-    res.innerHTML = '<div class="access-success">Access Granted! Opening...</div>';
-    // 403 error से बचने के लिए window.open का उपयोग
-    window.open(galleryLinks[code], '_blank');
-  } else if (!code) {
-    res.innerHTML = '<div class="access-error">Please enter your access code.</div>';
-  } else {
-    res.innerHTML = '<div class="access-error">Invalid access code.</div>';
-  }
+    const inputCode = document.getElementById('accessCode')?.value.trim(); // Aapki ID 'accessCode' use ki
+    
+    if (linkMap.hasOwnProperty(inputCode)) {
+        window.open(linkMap[inputCode], '_blank');
+    } else {
+        alert("Galat code! Kripya sahi password dalein.");
+    }
 }
 
-// Enter key ke liye event listener
+// Enter key ke liye event listener (Jo aapke paas pehle se tha)
 document.getElementById('accessCode')?.addEventListener('keydown', e => { 
-    if (e.key === 'Enter') checkAccess(); 
+    if (e.key === 'Enter') {
+        checkAccess(); 
+    }
 });
-
 // 2. Booking Form Submission (Sahi Se Google Form Se Connected)
 document.getElementById('google-booking-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
